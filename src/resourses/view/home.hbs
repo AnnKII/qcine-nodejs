@@ -1,0 +1,12 @@
+
+	<div class="gallery">
+
+		{{#each phim}}
+        <div class="gallery-item">
+			<a href="/phim/{{this.idphim}}">
+                <img class="gallery-image" src="{{this.anh}}" alt="{{this.tenphim}}">
+            </a>
+		</div>
+        {{/each}}
+
+	</div>

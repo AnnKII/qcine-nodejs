@@ -1,0 +1,81 @@
+<div id="booking" class="center" onclick="myFunction(event)">
+
+</div>
+<table class="table" style="margin-top: 50px ;">
+  <thead>
+    <tr>
+      <th scope="col">Vị trí</th>
+      <th scope="col">Giá</th>
+    </tr>
+  </thead>
+  <tbody id="table-col">
+    
+  </tbody>
+</table>
+{{!-- <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">i'X'j</a> --}}
+<script>
+    const sohang = {{hang}};
+    const socot = {{cot}};
+    var rawData = "{{ghe}}";
+    const seat = rawData.split(',');
+    console.log("Seat arr: "+seat);
+
+    
+    for(var i=0; i<socot; i++){
+        var div =document.createElement("DIV");
+        div.id = i;
+        document.getElementById("booking").appendChild(div);
+        for(var j=0; j<sohang; j++){
+            var btn = document.createElement("BUTTON");
+            
+            btn.style.border="10px";
+            btn.innerText= i+'X'+j;
+            btn.id =i+"X"+j;
+            btn.className = ((isUsed(btn.id)?
+                "btn btn-danger ": "btn btn-outline-dark" )),
+            btn.disabled = ((btn.className=="btn btn-danger ")? true: false);
+            
+            document.getElementById(i).appendChild(btn);
+        }
+    }
+    function isUsed(name){
+        for(var i=0; i<seat.length; i++){
+            if (seat[i]== name)
+                return true;
+        }
+        return false;
+    }
+    function myFunction(event) { 
+        var x = event.target;
+        if(x.tagName=="BUTTON"){
+           
+            var btn = document.getElementById(x.id);
+            btn.className =((btn.className=="btn btn-primary")? "btn btn-outline-dark": "btn btn-primary");
+            if(btn.className=="btn btn-outline-dark"){
+                var temp = document.getElementById(btn.id+"tr");
+                temp.remove();
+            }
+            else{
+                var tr = document.createElement("TR");
+                tr.id = btn.id+"tr";
+                document.getElementById("table-col").appendChild(tr);
+                // create content
+                var td = document.createElement("TD");
+                td.textContent = btn.id;
+                document.getElementById(btn.id+"tr").appendChild(td);
+                //
+                var td1 = document.createElement("TD");
+                td1.textContent = 45000;
+                document.getElementById(btn.id+"tr").appendChild(td1);
+            }
+        }
+         {{!-- document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element"; --}}
+}
+</script>
+<style>
+.center {
+  margin: auto;
+  width: 60%;
+  text-align: center;
+}
+</style>

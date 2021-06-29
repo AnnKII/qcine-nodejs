@@ -1,0 +1,23 @@
+<div class="container ">
+    <div class="row">
+         <div class="col-8 justify-content-center text-center">
+             <h2 style="align-content: center;">{{phim.tenphim}}</h2>
+            <p>{{phim.mota}}</p>
+            <iframe style="padding-bottom: 20px;" width="560" height="315" src="https://www.youtube.com/embed/{{phim.trailer}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            {{#if lich}}
+                <p>Hôm nay ({{lich.0.ngay}})</p>
+                <div class="row">
+                    <div class="col">
+                        {{#each lich}}
+                            <a type="button" class="btn btn-outline-primary" href="/lich/{{this.malich}}">{{this.gio}}</a>
+                        {{/each}}
+                    </div>
+                
+                </div>
+            {{/if}}
+         </div>
+    <div class="col-4 ">
+        <img src="{{phim.anh}}" style="width:420px;height:600px;"/>
+    </div>
+    </div>
+</div>
