@@ -1,0 +1,35 @@
+<div class="row">
+         <div class="col-8 justify-content-center text-center">
+             <h2 style="align-content: center;">{{phim.tenphim}}</h2>
+             <h4>Xuất chiếu: {{lich.ngay}} lúc {{lich.gio}}</h4>
+             <h6>Thành tiền: {{hoadon.thanhtien}}</h6>
+             <h6>Ngày đặt vé: {{hoadon.tglap}}</h6>
+             <h6>Số lượng: {{cthoadon.length}} ghế</h6>
+
+
+             <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hàng</th>
+                    <th scope="col">Cột</th>
+                    <th scope="col">Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cthoadon}}
+                    <tr>
+                    <th scope="row">{{this.number}}</th>
+                    <td>{{this.hang}}</td>
+                    <td>{{this.cot}}</td>
+                    <td>{{this.gia}}</td>
+                    </tr>
+                    {{/each}}
+                    
+                </tbody>
+                </table>
+         </div>
+    <div class="col-4 ">
+        <img src="{{phim.anh}}" style="width:420px;height:600px;"/>
+    </div>
+    </div>

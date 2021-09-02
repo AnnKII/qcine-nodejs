@@ -1,0 +1,11 @@
+{{#each hoadon}}
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Mã hóa đơn: {{this.mahd}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Ngày lập: {{this.tglap}}</h6>
+    <p class="card-text">Tổng tiền: {{this.thanhtien}}</p>
+    <a href="/hoadon/{{this.mahd}}" class="btn btn-primary" role="button">Chi tiết</a>
+  </div>
+</div>
+{{/each}}

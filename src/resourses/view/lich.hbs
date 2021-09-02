@@ -1,0 +1,41 @@
+<div class="center"><h1 style="font-family: 'Pacifico', cursive;">{{date}}</h1></div>
+{{#each listPhim as |phim|}}
+<div class="center ">
+    <div class="row">
+        <div class="col-4"><img src="{{phim.anh}}" alt=""></div>
+        <div class="col-8 align-middle" id="{{phim.idphim}}"style="font-family: 'Zen Loop', cursive;">
+            <h4>{{phim.tenphim}}</h4>
+            {{#if phim.lich}}
+                {{#each phim.lich as |lich|}}
+                    {{#if lich.islate }}
+                    <a href="#" class="btn btn-secondary btn-lg disabled" role="button" aria-disabled="true">{{lich.gio}}</a>
+                    {{else}}
+                    
+                     <a type="button" class="btn btn-outline-primary" href="/lich/{{lich.malich}}">{{lich.gio}}</a>
+                     
+                    {{/if}}
+                {{/each}}
+            {{else}}
+                <h5>Xin lỗi, phim này không có lịch chiếu trong ngày </h5>
+                
+            {{/if}}
+            
+
+        </div>
+    </div>   
+</div>
+
+{{/each}}
+
+<script>
+    
+</script>  
+<style>
+.center {
+  margin: auto;
+  width: 80%;
+  text-align: center;
+  padding-bottom: 1%;
+}
+
+</style>

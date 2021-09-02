@@ -1,5 +1,7 @@
-<div id="booking" class="center" onclick="myFunction(event)">
 
+<div id="booking" class="center border border-primary" onclick="myFunction(event)">
+    <h1 style="align-content: center;">{{phim.tenphim}}</h1>
+    <h3 style="align-content: center;">Ngày chiếu: {{lich.ngay}}</h3>
 </div>
 <table class="table" style="margin-top: 50px ;">
   <thead>
@@ -9,14 +11,23 @@
     </tr>
   </thead>
   <tbody id="table-col">
-    
+   <tr>
+       <td id='soluong'></td>
+       <td id='sum'></td>
+   </tr> 
   </tbody>
 </table>
+    
+<div class="center">
+<button type="button" class="btn btn-danger" id="check">Đặt vé</button>
+</div>
 {{!-- <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">i'X'j</a> --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const sohang = {{hang}};
     const socot = {{cot}};
     var rawData = "{{ghe}}";
+    var selected =[];
     const seat = rawData.split(',');
     console.log("Seat arr: "+seat);
 
@@ -32,7 +43,7 @@
             btn.innerText= i+'X'+j;
             btn.id =i+"X"+j;
             btn.className = ((isUsed(btn.id)?
-                "btn btn-danger ": "btn btn-outline-dark" )),
+                "btn btn-danger ": "btn btn-outline-dark" ));
             btn.disabled = ((btn.className=="btn btn-danger ")? true: false);
             
             document.getElementById(i).appendChild(btn);
@@ -54,6 +65,8 @@
             if(btn.className=="btn btn-outline-dark"){
                 var temp = document.getElementById(btn.id+"tr");
                 temp.remove();
+                selected.splice(getIndex(btn.id), 1);
+                console.log("BTN "+ btn.id+" has been removed");
             }
             else{
                 var tr = document.createElement("TR");
@@ -65,12 +78,57 @@
                 document.getElementById(btn.id+"tr").appendChild(td);
                 //
                 var td1 = document.createElement("TD");
-                td1.textContent = 45000;
+                var x = 45000;
+                td1.textContent = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
                 document.getElementById(btn.id+"tr").appendChild(td1);
+                var seatt = btn.id;
+                //console.log('Seatt: '+seatt);
+                selected.push(seatt);
             }
+            var soluong = selected.length;
+            var sum = soluong*45000;
+            document.getElementById("soluong").innerHTML = "<b>Số lượng:</b> "+ soluong.toString();
+            sum = sum.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            document.getElementById("sum").innerHTML = "<b>Tổng tiền:</b> "+ sum;
+
         }
-         {{!-- document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element"; --}}
-}
+
+
+    }
+    function getIndex(name){
+        if(selected.length>0){
+            for(var i=0; i<selected.length; i++){
+            if (name== selected[i])
+                return i;
+
+        }
+        }
+        return -1;
+    }
+    document.getElementById("check").addEventListener("click", function(){
+        if (selected.length!=0){
+            var malich = {{malich}};
+            var btnCheck = document.getElementById("check");
+            btnCheck.disabled = true;
+            var temp = document.createElement("span");
+            temp.className="spinner-border spinner-border-sm";
+            btnCheck.appendChild(temp);
+            var xhr = new XMLHttpRequest();
+            var url = "http://localhost:3000/checkout";
+            data = JSON.stringify(selected);
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type","application/json;charset=UTF-8");
+            xhr.setRequestHeader("malich", malich);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    window.location.reload(true);
+                }
+        };
+        xhr.send(data); 
+   
+        }
+    });
+   
 </script>
 <style>
 .center {
